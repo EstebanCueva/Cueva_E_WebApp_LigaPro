@@ -10,14 +10,14 @@ namespace CuevaE_WebApp_LigaPro.Controllers
         {
             Repositories repository = new Repositories();
             var equipos = repository.DevuelveListadoEquipos();
-            return View(equipos);
+            return View("List",equipos);
         }
 
         public IActionResult Edit(int Id)
         {
             Repositories repository = new Repositories();
             var equipo = repository.DevuelveInfoEquipo(Id);
-            return View(equipo);
+            return View("List",equipo);
         }
 
 
