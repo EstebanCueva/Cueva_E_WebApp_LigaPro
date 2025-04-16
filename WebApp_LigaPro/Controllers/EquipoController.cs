@@ -9,6 +9,7 @@ namespace CuevaE_WebApp_LigaPro.Controllers
         private readonly IEquipoRepository repository;
 
         // ✅ Inyección del repositorio por constructor
+        //Controlador Editado con Ia
         public EquipoController(IEquipoRepository repository)
         {
             this.repository = repository;
