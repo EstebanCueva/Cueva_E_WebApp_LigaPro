@@ -4,7 +4,7 @@
     ViewData["Title"] = "List";
 }
 
-<h1>List</h1>   
+<h1>List</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
@@ -37,34 +37,80 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PartidosJugados)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PartidosGanados)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PartidosEmpatados)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PartidosPerdidos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Puntos)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PartidosJugados)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PartidosGanados)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PartidosEmpatados)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PartidosPerdidos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Puntos)
+                </td>
+                <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-success" })
-
-            </td>
-        </tr>
-}
+                    <!-- Button to open the modal -->
+                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailsModal"
+                            data-id="@item.Id" data-nombre="@item.Nombre"
+                            data-logo="@item.Logo" data-descripcion="@item.Descripcion">
+                        Details
+                    </button>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Equipo Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalLogo" src="" alt="Logo" class="img-fluid mb-3">
+                <p><strong>Nombre:</strong> <span id="modalNombre"></span></p>
+                <p><strong>Descripción:</strong> <span id="modalDescripcion"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to populate modal with data -->
+<script>
+    var detailsModal = document.getElementById('detailsModal');
+    detailsModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var id = button.getAttribute('data-id');
+        var nombre = button.getAttribute('data-nombre');
+        var logo = button.getAttribute('data-logo');
+        var descripcion = button.getAttribute('data-descripcion');
+
+        var modalNombre = detailsModal.querySelector('#modalNombre');
+        var modalLogo = detailsModal.querySelector('#modalLogo');
+        var modalDescripcion = detailsModal.querySelector('#modalDescripcion');
+
+        modalNombre.textContent = nombre;
+        modalLogo.src = logo;
+        modalDescripcion.textContent = descripcion;
+    });
+</script>

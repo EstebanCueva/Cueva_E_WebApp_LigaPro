@@ -1,4 +1,4 @@
-﻿using CuevaE_WebApp_LigaPro.Repos;
+﻿using CuevaE_WebApp_LigaPro.Interface;
 using Microsoft.AspNetCore.Mvc;
 using WebApp_LigaPro.Models;
 
@@ -6,8 +6,13 @@ namespace CuevaE_WebApp_LigaPro.Controllers
 {
     public class EquipoController : Controller
     {
-        // ✅ Instancia única del repositorio
-        Repositories repository = new Repositories();
+        private readonly IEquipoRepository repository;
+
+        // ✅ Inyección del repositorio por constructor
+        public EquipoController(IEquipoRepository repository)
+        {
+            this.repository = repository;
+        }
 
         public IActionResult ListaEquipos()
         {
