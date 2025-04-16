@@ -6,21 +6,38 @@ namespace CuevaE_WebApp_LigaPro.Controllers
 {
     public class EquipoController : Controller
     {
+        // ✅ Instancia única del repositorio
+        Repositories repository = new Repositories();
+
         public IActionResult ListaEquipos()
         {
-            Repositories repository = new Repositories();
             var equipos = repository.DevuelveListadoEquipos();
-            return View("List",equipos);
+            return View("List", equipos);
         }
 
         public IActionResult Edit(int Id)
         {
-            Repositories repository = new Repositories();
             var equipo = repository.DevuelveInfoEquipo(Id);
-            return View("List",equipo);
+            if (equipo == null)
+            {
+                return NotFound();
+            }
+            return View("Edit", equipo);
         }
 
-
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Equipo equipo)
+        {
+            if (ModelState.IsValid)
+            {
+                bool actualizado = repository.ActualizaEquipo(equipo);
+                if (actualizado)
+                    return RedirectToAction("ListaEquipos");
+                else
+                    return NotFound();
+            }
+            return View("Edit", equipo);
+        }
     }
 }

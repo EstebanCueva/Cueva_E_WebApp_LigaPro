@@ -6,8 +6,9 @@ namespace CuevaE_WebApp_LigaPro.Interface
     {
         List<Equipo> DevuelveListadoEquipos();
         Equipo DevuelveInfoEquipo(int Id);
+
         bool CrearEquipo();
-        bool ActualizaEquipo();
+        bool ActualizaEquipo( Equipo equipo);
         bool EliminarEquipo();
     }
 }
